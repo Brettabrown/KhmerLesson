@@ -1,0 +1,340 @@
+/* ============================================================
+   KhmerLesson – Global Styles
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary:    #8b0000;   /* deep red – inspired by Cambodian flag */
+  --accent:     #f5c542;   /* gold */
+  --bg:         #fdf6ec;
+  --card-front: #ffffff;
+  --card-back:  #8b0000;
+  --text-dark:  #1a1a1a;
+  --text-light: #ffffff;
+  --radius:     12px;
+  --shadow:     0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+header {
+  background: var(--primary);
+  color: var(--text-light);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+header h1 {
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+}
+
+header h1 span {
+  color: var(--accent);
+}
+
+nav a {
+  color: var(--text-light);
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-size: 0.95rem;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+nav a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* ── Main ── */
+main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── Hero (index page) ── */
+.hero {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+}
+
+.hero h2 {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+/* ── Category cards (index page) ── */
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.category-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text-dark);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-top: 5px solid var(--primary);
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+}
+
+.category-card .icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.category-card h3 {
+  font-size: 1.15rem;
+  color: var(--primary);
+  margin-bottom: 0.4rem;
+}
+
+.category-card p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* ── Flashcard page ── */
+.flashcard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.flashcard-header h2 {
+  color: var(--primary);
+  font-size: 1.4rem;
+}
+
+.progress-text {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Flashcard flip container */
+.scene {
+  width: 100%;
+  max-width: 480px;
+  height: 280px;
+  margin: 0 auto 2rem;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--radius);
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: var(--shadow);
+}
+
+.card-front {
+  background: var(--card-front);
+  border: 2px solid #e8d5c4;
+}
+
+.card-back {
+  background: var(--card-back);
+  color: var(--text-light);
+  transform: rotateY(180deg);
+}
+
+.card-front .khmer {
+  font-size: 4rem;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+}
+
+.card-front .hint {
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 0.75rem;
+}
+
+.card-back .transliteration {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  color: var(--accent);
+}
+
+.card-back .meaning {
+  font-size: 1.1rem;
+}
+
+.card-back .example {
+  font-size: 0.85rem;
+  margin-top: 0.6rem;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--text-light);
+}
+
+.btn-primary:hover {
+  background: #6a0000;
+}
+
+.btn-secondary {
+  background: #e8d5c4;
+  color: var(--text-dark);
+}
+
+.btn-secondary:hover {
+  background: #d6c0ac;
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.btn-accent:hover {
+  background: #e0b030;
+}
+
+/* Category selector */
+.category-selector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.category-selector button {
+  padding: 0.4rem 1rem;
+  border: 2px solid var(--primary);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.category-selector button.active,
+.category-selector button:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Progress bar */
+.progress-bar-wrap {
+  background: #e0d0c0;
+  border-radius: 20px;
+  height: 8px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 20px;
+  transition: width 0.35s ease;
+}
+
+/* ── Footer ── */
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: #888;
+  border-top: 1px solid #e0d0c0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 500px) {
+  header h1 { font-size: 1.2rem; }
+  .scene { height: 220px; }
+  .card-front .khmer { font-size: 3rem; }
+}

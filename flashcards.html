@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flashcards – KhmerLesson</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Khmer<span>Lesson</span></h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="flashcards.html">Flashcards</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- Deck selector -->
+    <div class="category-selector">
+      <button class="cat-btn active" data-deck="consonants">Consonants</button>
+      <button class="cat-btn" data-deck="vowels">Vowels</button>
+      <button class="cat-btn" data-deck="numbers">Numbers</button>
+      <button class="cat-btn" data-deck="vocabulary">Basic Words</button>
+    </div>
+
+    <!-- Progress -->
+    <div class="flashcard-header">
+      <h2 id="deck-label">Flashcards</h2>
+      <span class="progress-text" id="progress-text">Card 1 of 20</span>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progress-bar" style="width: 5%;"></div>
+    </div>
+
+    <!-- Flashcard -->
+    <div class="scene" role="button" aria-label="Flashcard – click to flip" tabindex="0">
+      <div class="card" id="flashcard">
+
+        <!-- Front -->
+        <div class="card-face card-front">
+          <div class="khmer" id="khmer-text">ក</div>
+          <p class="hint">Click the card (or press Space) to reveal</p>
+        </div>
+
+        <!-- Back -->
+        <div class="card-face card-back">
+          <div class="transliteration" id="translit-text">ka</div>
+          <div class="meaning" id="meaning-text">k sound (like 'k' in 'king')</div>
+          <div class="example" id="example-text">ក – first Khmer consonant</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="btn btn-secondary" id="prev-btn" disabled>← Prev</button>
+      <button class="btn btn-accent"    id="flip-btn">Flip Card</button>
+      <button class="btn btn-secondary" id="next-btn">Next →</button>
+    </div>
+
+    <div style="text-align:center;">
+      <button class="btn btn-primary" id="shuffle-btn">🔀 Shuffle Deck</button>
+    </div>
+
+    <p style="text-align:center; margin-top:1rem; font-size:0.85rem; color:#888;">
+      Keyboard shortcuts: <strong>←</strong> / <strong>→</strong> to navigate &nbsp;|&nbsp; <strong>Space</strong> or <strong>Enter</strong> to flip
+    </p>
+
+  </main>
+
+  <footer>
+    <p>KhmerLesson &mdash; A Language Learning Program</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Read ?deck=… from URL and switch to that deck on page load
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const deck   = params.get("deck");
+      if (deck && typeof DECKS !== "undefined" && DECKS[deck]) {
+        switchDeck(deck);
+      }
+    })();
+  </script>
+</body>
+</html>
