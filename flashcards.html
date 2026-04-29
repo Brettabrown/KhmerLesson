@@ -83,7 +83,7 @@
     (function () {
       const params = new URLSearchParams(window.location.search);
       const deck   = params.get("deck");
-      if (deck && typeof DECKS !== "undefined" && DECKS[deck]) {
+      if (deck && typeof VALID_DECKS !== "undefined" && VALID_DECKS.has(deck)) {
         switchDeck(deck);
       }
     })();

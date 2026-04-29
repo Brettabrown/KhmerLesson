@@ -76,10 +76,14 @@ const DECKS = {
   }
 };
 
+// Allow list of valid deck keys – used to guard against prototype injection via URL params
+const VALID_DECKS = new Set(Object.keys(DECKS));
+
 // ── State ──
 let currentDeck = "consonants";
 let currentIndex = 0;
 let isFlipped = false;
+let currentCards = DECKS[currentDeck].cards.slice(); // working copy – never write back to DECKS
 
 // ── DOM refs ──
 const cardEl         = document.getElementById("flashcard");
@@ -97,7 +101,7 @@ const categoryBtns   = document.querySelectorAll(".cat-btn");
 
 // ── Helpers ──
 function getDeck() {
-  return DECKS[currentDeck].cards;
+  return currentCards;
 }
 
 function updateCard() {
@@ -155,15 +159,15 @@ function shuffle(arr) {
 }
 
 function shuffleDeck() {
-  if (!Object.prototype.hasOwnProperty.call(DECKS, currentDeck)) return;
-  DECKS[currentDeck].cards = shuffle(DECKS[currentDeck].cards);
+  currentCards = shuffle(currentCards);
   currentIndex = 0;
   updateCard();
 }
 
 function switchDeck(deckKey) {
-  if (!Object.prototype.hasOwnProperty.call(DECKS, deckKey)) return;
+  if (!VALID_DECKS.has(deckKey)) return;
   currentDeck = deckKey;
+  currentCards = DECKS[deckKey].cards.slice();
   currentIndex = 0;
   updateCard();
 
@@ -179,6 +183,17 @@ flipBtn.addEventListener("click", flipCard);
 nextBtn.addEventListener("click", goNext);
 prevBtn.addEventListener("click", goPrev);
 shuffleBtn.addEventListener("click", shuffleDeck);
+
+// Allow the scene wrapper (focusable via Tab) to flip on Space/Enter
+const sceneEl = cardEl.closest(".scene");
+if (sceneEl) {
+  sceneEl.addEventListener("keydown", e => {
+    if (e.key === " " || e.key === "Enter") {
+      e.preventDefault();
+      flipCard();
+    }
+  });
+}
 
 categoryBtns.forEach(btn => {
   btn.addEventListener("click", () => switchDeck(btn.dataset.deck));
